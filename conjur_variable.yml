@@ -1,0 +1,31 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    ami_id: ami-02eac2c0129f6376b
+    keypair: cyberark-pasaas
+    region: us-east-1
+    security_group: sg-035eb1a11c4584d01
+    subnet: subnet-08f9e42a174453e28
+    type: t2.micro
+
+  tasks:
+    - name: Retrieve AWS Access Key from CyberArk Conjur or AAM DAP
+      set_fact:
+        AWS_ACCESS_KEY_ID: "{{ lookup('conjur_variable', 'ec2-deploy/access_key_id') }}"
+        AWS_SECRET_ACCESS_KEY: "{{ lookup('conjur_variable', 'ec2-deploy/access_key_secret') }}"
+      no_log: yes
+
+    - name: Start CentOS 7 AWS EC2 Instance
+      ec2:
+        aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+        aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+        assign_public_ip: yes
+        group_id: "{{ security_group }}"
+        image: "{{ ami_id }}"
+        instance_tags:
+          Name: CentOS Client
+          role: client_centos
+        instance_type: "{{ type }}"
+        key_name: "{{ keypair }}"
+        region: "{{ region }}"
+        vpc_subnet_id: "{{ subnet }}"
