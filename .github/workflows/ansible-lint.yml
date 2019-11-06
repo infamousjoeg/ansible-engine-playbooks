@@ -12,5 +12,5 @@ jobs:
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@master
       with:
-        targets: "/"
+        targets: "cyberarkpassword.yml conjur_variable.yml"
         args: ""
