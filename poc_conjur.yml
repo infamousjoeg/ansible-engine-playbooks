@@ -1,0 +1,8 @@
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Retrieve Secret from Conjur
+      debug:
+        msg: "{{ lookup('conjur_variable', 'aws-ec2/database/username') }}"
+      # no_log: yes
