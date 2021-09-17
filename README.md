@@ -41,4 +41,4 @@ File: [cyberarkpassword.yml](cyberarkpassword.yml)
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)
