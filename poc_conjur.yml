@@ -1,8 +1,13 @@
+# THIS PLAYBOOK IS DESIGNED TO BE USED WITH:
+# https://github.com/CaptainFluffyToes/Conjur-Configurator
+# DISCLAIMER: FOR POC USE ONLY, DO NOT USE IN PRODUCTION
+##########################################################
 - hosts: localhost
   gather_facts: no
 
   tasks:
     - name: Retrieve Secret from Conjur
       debug:
-        msg: "{{ lookup('conjur_variable', 'aws-ec2/database/username') }}"
+        msg: "{{ lookup('conjur_variable', 'secrets/cd-variables/ansible_secret') }}"
+      # UNCOMMENT BELOW TO HIDE TASK FROM STDOUT & LOGS
       # no_log: yes
